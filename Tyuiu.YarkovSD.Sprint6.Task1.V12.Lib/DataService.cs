@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Headers;
 using tyuiu.cources.programming.interfaces.Sprint6;
 
-namespace Tyuiu.YarkovSD.Sprint6.Task1.V28.Lib
+namespace Tyuiu.YarkovSD.Sprint6.Task1.V12.Lib
 {
-    public class DataService : ISprint6Task1V28
+    public class DataService : ISprint6Task1V12
     {
         public double[] GetMassFunction(int startValue, int stopValue)
         {
