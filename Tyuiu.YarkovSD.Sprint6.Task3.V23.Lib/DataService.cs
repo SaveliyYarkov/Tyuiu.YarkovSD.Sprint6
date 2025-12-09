@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using tyuiu.cources.programming.interfaces.Sprint6;
 
 namespace Tyuiu.YarkovSD.Sprint6.Task3.V23.Lib
@@ -7,35 +8,30 @@ namespace Tyuiu.YarkovSD.Sprint6.Task3.V23.Lib
     {
         public int[,] Calculate(int[,] matrix)
         {
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
+            int rows = matrix.GetLength(0); // 5
+            int cols = matrix.GetLength(1); // 5
 
-            // Создаем массив строк для удобства сортировки
-            int[][] rowsArray = new int[rows][];
+            // Копируем исходную матрицу
+            int[,] resultMatrix = new int[rows, cols];
+            Array.Copy(matrix, resultMatrix, matrix.Length);
 
+            // Получаем значения из второго столбца (индекс 1)
+            List<int> secondColumnValues = new List<int>();
             for (int i = 0; i < rows; i++)
             {
-                rowsArray[i] = new int[cols];
-                for (int j = 0; j < cols; j++)
-                {
-                    rowsArray[i][j] = matrix[i, j];
-                }
+                secondColumnValues.Add(resultMatrix[i, 1]);
             }
 
-            // Сортируем массив строк по второму элементу (столбцу с индексом 1)
-            Array.Sort(rowsArray, (row1, row2) => row1[1].CompareTo(row2[1]));
+            // Сортируем значения
+            secondColumnValues.Sort();
 
-            // Преобразуем обратно в двумерный массив
-            int[,] result = new int[rows, cols];
+            // Вставляем отсортированные значения обратно во второй столбец
             for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < cols; j++)
-                {
-                    result[i, j] = rowsArray[i][j];
-                }
+                resultMatrix[i, 1] = secondColumnValues[i];
             }
 
-            return result;
+            return resultMatrix;
         }
     }
 }
