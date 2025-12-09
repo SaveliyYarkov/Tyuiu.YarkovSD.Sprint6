@@ -7,26 +7,20 @@ namespace Tyuiu.YarkovSD.Sprint6.Task6.V21.Lib
 {
     public class DataService : ISprint6Task6V21
     {
-        public string CollectTextFromFile(string str)
+        public string CollectTextFromFile(string path)
         {
-            // Используем str как разделитель для слов
-            char separator = ' ';
-            if (!string.IsNullOrEmpty(str) && str.Length > 0)
-            {
-                separator = str[0];
-            }
-
             string result = "";
 
-            using (StreamReader sr = new StreamReader(str))
+            using (StreamReader sr = new StreamReader(path))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    // Разбиваем строку на слова по заданному разделителю
-                    string[] words = line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    // Разбиваем строку на слова по стандартным разделителям
+                    char[] separators = new char[] { ' ', ',', '.', '!', '?', ';', ':', '\t', '\n', '\r' };
+                    string[] words = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-                    // Фильтруем слова, содержащие букву 'g' 
+                    // Фильтруем слова, содержащие букву 'g'
                     var filteredWords = words.Where(word =>
                         word.IndexOf('g', StringComparison.OrdinalIgnoreCase) >= 0);
 
