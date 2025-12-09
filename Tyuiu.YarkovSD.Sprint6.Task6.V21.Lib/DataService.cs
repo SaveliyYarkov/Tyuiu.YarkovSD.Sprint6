@@ -20,9 +20,8 @@ namespace Tyuiu.YarkovSD.Sprint6.Task6.V21.Lib
                     char[] separators = new char[] { ' ', ',', '.', '!', '?', ';', ':', '\t', '\n', '\r' };
                     string[] words = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-                    // Фильтруем слова, содержащие букву 'g'
-                    var filteredWords = words.Where(word =>
-                        word.IndexOf('g', StringComparison.OrdinalIgnoreCase) >= 0);
+                    // Фильтруем слова, содержащие строчную букву 'g'
+                    var filteredWords = words.Where(word => word.Contains('g'));
 
                     // Добавляем отфильтрованные слова в результат
                     foreach (string word in filteredWords)
