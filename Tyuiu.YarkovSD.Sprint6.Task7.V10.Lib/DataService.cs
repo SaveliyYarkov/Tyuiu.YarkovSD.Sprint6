@@ -1,60 +1,54 @@
-﻿using tyuiu.cources.programming.interfaces.Sprint6;
-using System.IO;
-using System.Linq;
-
-namespace Tyuiu.YarkovSD.Sprint6.Task7.V10.Lib
+﻿public int[,] GetMatrix(string path)
 {
-    public class DataService : ISprint6Task7V10
+    // Проверки
+    if (string.IsNullOrEmpty(path))
+        throw new ArgumentException("Путь к файлу не указан");
+
+    if (!File.Exists(path))
+        throw new FileNotFoundException($"Файл не найден: {path}", path);
+
+    string[] lines = File.ReadAllLines(path);
+
+    if (lines.Length == 0)
+        throw new ArgumentException("Файл пуст");
+
+    if (lines.Length < 5)
+        throw new ArgumentException($"В файле только {lines.Length} строк. Требуется минимум 5.");
+
+    // Определяем размеры
+    int rows = lines.Length;
+    string[] firstLineValues = lines[0].Split(';');
+    int cols = firstLineValues.Length;
+
+    int[,] matrix = new int[rows, cols];
+    int[,] result = new int[rows, cols];
+
+    // Парсинг и обработка в одном цикле
+    for (int i = 0; i < rows; i++)
     {
-        public int[,] GetMatrix(string path)
+        string[] values = lines[i].Split(';');
+
+        if (values.Length != cols)
+            throw new FormatException($"Строка {i + 1}: ожидалось {cols} значений, получено {values.Length}");
+
+        for (int j = 0; j < cols; j++)
         {
-            string[] lines = File.ReadAllLines(path);
+            if (!int.TryParse(values[j].Trim(), out int value))
+                throw new FormatException($"Строка {i + 1}, столбец {j + 1}: не удалось преобразовать '{values[j]}' в число");
 
-            // Определяем размеры матрицы
-            int rows = lines.Length;
-            string[] firstLine = lines[0].Split(';');
-            int cols = firstLine.Length;
+            matrix[i, j] = value;
 
-            // Создаем матрицу
-            int[,] matrix = new int[rows, cols];
-
-            // Заполняем матрицу данными из файла
-            for (int i = 0; i < rows; i++)
+            // Обработка пятой строки
+            if (i == 4) // Пятая строка
             {
-                string[] values = lines[i].Split(';');
-                for (int j = 0; j < cols; j++)
-                {
-                    matrix[i, j] = int.Parse(values[j]);
-                }
+                result[i, j] = (value >= 5 && value <= 10) ? 0 : value;
             }
-
-            int[,] result = new int[rows, cols];
-
-            // Обрабатываем матрицу
-            for (int i = 0; i < rows; i++)
+            else
             {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (i == 4)
-                    {
-                        int value = matrix[i, j];
-                        if (value >= 5 && value <= 10)
-                        {
-                            result[i, j] = 0;
-                        }
-                        else
-                        {
-                            result[i, j] = matrix[i, j];
-                        }
-                    }
-                    else
-                    {
-                        result[i, j] = matrix[i, j];
-                    }
-                }
+                result[i, j] = value;
             }
-
-            return result;
         }
     }
+
+    return result;
 }
