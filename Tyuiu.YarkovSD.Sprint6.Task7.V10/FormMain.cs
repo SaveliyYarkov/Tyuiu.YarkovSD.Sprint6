@@ -21,7 +21,6 @@ namespace Tyuiu.YarkovSD.Sprint6.Task7.V10
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            // Начальное состояние
             buttonDoneYSD.Enabled = false;
             buttonSaveYSD.Enabled = false;
         }
@@ -34,7 +33,6 @@ namespace Tyuiu.YarkovSD.Sprint6.Task7.V10
                 {
                     openFilePath = openFileDialogTask.FileName;
 
-                    // Загружаем матрицу для определения размеров
                     string[] allLines = File.ReadAllLines(openFilePath);
                     var lines = allLines
                         .Where(line => !string.IsNullOrWhiteSpace(line))
@@ -91,21 +89,18 @@ namespace Tyuiu.YarkovSD.Sprint6.Task7.V10
             dgv.Rows.Clear();
             dgv.Columns.Clear();
 
-            // Добавляем столбцы с номерами (начиная с 0)
             for (int i = 0; i < columnCount; i++)
             {
-                dgv.Columns.Add($"Col{i}", i.ToString()); // Нумерация с 0
+                dgv.Columns.Add($"Col{i}", i.ToString()); 
                 dgv.Columns[i].Width = 40;
                 dgv.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            // Добавляем строки
             dgv.RowCount = rowCount;
 
-            // Настраиваем заголовки строк
             for (int i = 0; i < rowCount; i++)
             {
-                dgv.Rows[i].HeaderCell.Value = i.ToString(); // Нумерация строк с 0
+                dgv.Rows[i].HeaderCell.Value = i.ToString(); 
             }
 
             dgv.RowHeadersWidth = 40;
@@ -168,10 +163,8 @@ namespace Tyuiu.YarkovSD.Sprint6.Task7.V10
         {
             try
             {
-                // Получаем обработанную матрицу
                 int[,] processedMatrix = ds.GetMatrix(openFilePath);
 
-                // Настраиваем DataGridView для вывода
                 SetupDataGridView(dataGridViewOutYSD, rows, columns);
 
                 // Отображаем обработанную матрицу

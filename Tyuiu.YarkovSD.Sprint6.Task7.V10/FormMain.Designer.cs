@@ -48,7 +48,7 @@
             saveFileDialogTask = new SaveFileDialog();
             toolTipButton = new ToolTip(components);
             groupBoxTaskYSD = new GroupBox();
-            textBox1 = new TextBox();
+            textBoxYSD = new TextBox();
             groupBoxTitleYSD = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewInYSD).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOutYSD).BeginInit();
@@ -184,7 +184,7 @@
             // 
             // groupBoxTaskYSD
             // 
-            groupBoxTaskYSD.Controls.Add(textBox1);
+            groupBoxTaskYSD.Controls.Add(textBoxYSD);
             groupBoxTaskYSD.Location = new Point(10, 80);
             groupBoxTaskYSD.Name = "groupBoxTaskYSD";
             groupBoxTaskYSD.Size = new Size(862, 117);
@@ -192,14 +192,14 @@
             groupBoxTaskYSD.TabStop = false;
             groupBoxTaskYSD.Text = "Условие:";
             // 
-            // textBox1
+            // textBoxYSD
             // 
-            textBox1.Location = new Point(2, 22);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(854, 89);
-            textBox1.TabIndex = 0;
-            textBox1.Text = resources.GetString("textBox1.Text");
+            textBoxYSD.Location = new Point(2, 22);
+            textBoxYSD.Multiline = true;
+            textBoxYSD.Name = "textBoxYSD";
+            textBoxYSD.Size = new Size(854, 89);
+            textBoxYSD.TabIndex = 0;
+            textBoxYSD.Text = resources.GetString("textBoxYSD.Text");
             // 
             // groupBoxTitleYSD
             // 
@@ -238,7 +238,7 @@
         }
         private Button buttonHelpYSD;
         private GroupBox groupBoxTaskYSD;
-        private TextBox textBox1;
+        private TextBox textBoxYSD;
         private GroupBox groupBoxTitleYSD;
     }
 }
