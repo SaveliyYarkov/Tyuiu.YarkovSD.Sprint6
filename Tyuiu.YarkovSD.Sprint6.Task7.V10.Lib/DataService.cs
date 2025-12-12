@@ -1,61 +1,37 @@
 ﻿using tyuiu.cources.programming.interfaces.Sprint6;
-using System.IO;
-using System.Linq;
-
 namespace Tyuiu.YarkovSD.Sprint6.Task7.V10.Lib
 {
     public class DataService : ISprint6Task7V10
     {
         public int[,] GetMatrix(string path)
         {
-            string[] lines = File.ReadAllLines(path)
-                .Where(line => !string.IsNullOrWhiteSpace(line))
-                .ToArray();
+            string fileData = File.ReadAllText(path);
 
-            if (lines.Length < 5)
-                throw new ArgumentException($"Требуется минимум 5 строк. Найдено: {lines.Length}");
+            fileData = fileData.Replace('\n', '\r');
+            string[] lines = fileData.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
 
             int rows = lines.Length;
-            string[] firstLine = lines[0].Split(';');
-            int cols = firstLine.Length;
+            int columns = lines[0].Split(';').Length;
+            int[,] matrix = new int[rows, columns];
 
-            int[,] matrix = new int[rows, cols];
-            int[,] result = new int[rows, cols];
 
             for (int i = 0; i < rows; i++)
             {
                 string[] values = lines[i].Split(';');
 
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    if (int.TryParse(values[j]?.Trim() ?? "0", out int value))
+                    matrix[i, j] = int.Parse(values[j]);
+
+                    if (matrix[4, j] >= 5 && matrix[4, j] < 10)
                     {
-                        matrix[i, j] = value;
+                        matrix[4, j] = 0;
                     }
-                    else
-                    {
-                        matrix[i, j] = 0;
-                    }
+
                 }
             }
-
-            // Обрабатываем пятую строку
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (i == 4 && matrix[i, j] >= 5 && matrix[i, j] <= 10)
-                    {
-                        result[i, j] = 0;
-                    }
-                    else
-                    {
-                        result[i, j] = matrix[i, j];
-                    }
-                }
-            }
-
-            return result;
+            return matrix;
         }
     }
 }
